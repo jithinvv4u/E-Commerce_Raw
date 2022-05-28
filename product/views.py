@@ -16,7 +16,9 @@ def createItemView(request):
         else:
             return HttpResponse('not valid')
 
-#add item to user cart
+'''add item to user cart
+    check whether the item already in cart and 
+    user is logged in or not'''
 def add_cart(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
@@ -47,7 +49,10 @@ def remove_cart(request, id):
         cart.delete()
         return redirect('cartdata')
 
-#increase item quantity in cart
+'''increase item quantity in cart
+    check the quantity of item and add 1 to it while clicking '+' button
+    and return updated quantity to template
+    by using jquery and ajax'''
 def cart_plus(request):
     if request.method == 'POST':
         pid = request.POST.get('pid')
@@ -71,7 +76,10 @@ def cart_plus(request):
         qty = carts[0]
         return JsonResponse({'quantity': qty})
 
-#decrease item quantity in cart
+'''decrease item quantity in cart
+    check the quantity of item and substitute 1 from it while clicking '-' button
+    and return updated quantity to template
+    by using jquery and ajax'''
 def cart_minus(request):
     if request.method == 'POST':
         pid = request.POST.get('pid')
@@ -96,17 +104,10 @@ def cart_minus(request):
         data=qty['quantity']
         return JsonResponse({'quantity': data})
 
-#inventory home page
+#inventory home page 
 @login_required
 def inventoryHome(request):
-    if request.method=='POST':
-        form=ItemForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('inventory')
-        else:
-            return HttpResponse('not valid')
-    else:
+    if request.method=='GET':
         items=Item.objects.all()
         return render(request,'inventory.html',{'items':items})
 
