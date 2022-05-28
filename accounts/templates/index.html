@@ -1,0 +1,131 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <title>Register</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.12.0/build/css/alertify.min.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="  https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css  ">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css  ">
+  <link rel="stylesheet" href="/static/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="/static/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+
+</head>
+
+<body>
+
+
+  <nav class="navbar navbar-expand-sm navbar-dark bg-success" style="height: 7%;">
+    <a class="navbar-brand" href="{% url 'index' %}">E-COMMERCE</a>
+    <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+      aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
+
+      {% if user.is_authenticated %}
+      <a class="mr-3" href="{% url 'cartdata' %}">Cart</a>
+      {{user.username}}
+      <a href="{% url 'logout' %}"><button type="button" class="btn btn-danger ml-4">LogOut</button></a>
+
+      {% else %}
+      <a href="{% url 'login' %}"><button type="button" class="btn btn-success mr-1">Login</button></a>
+      <a href="{% url 'signup' %}"><button type="button" class="btn btn-success">Signup</button></a>
+      {% endif %}
+
+    </div>
+  </nav>
+
+  {% block index %}
+
+
+
+  <div class="container">
+
+    {% for item in items %}
+    <div class="card  text-center m-2 item_data" style="width: 15rem; float: left;">
+      <img class="card-img-top" src="media/{{item.image}}" alt="Card image cap">
+      <div class="cart_data card-body">
+        <h5 id="item_name" class="card-title name" value="{{item.name}}">{{item.name}}</h5>
+        <input type="hidden" class="pid" value="{{item.id}}">
+        <input type="hidden" class="card-text" value="{{item.description}}">{{item.description}} <br>
+        <input type="hidden" class="card-text ml-5 price" style="float: left;" value="₹ {{item.price}}">₹ {{item.rate}}
+        </a>
+        {% csrf_token %}
+
+        {% if user.is_authenticated %}
+
+        {% if item.cart_added_quantity %}
+
+        <div class="btncart_sub" style="float: right;" id="add{{item.id}}">
+          <button type="button" class="btnminus btn btn-outline-success">-</button>
+          <input id="qty_ipnut{{item.id}}" style="width: 30px;" type="text" value="{{item.cart_added_quantity}}">
+          <button type="button" class="btnplus btn btn-outline-success">+</button>
+        </div>
+
+        {% else %}
+        <input type="button" id="{{item.id}}" class="btncart btn btn-success" style="float: right;" value="Add Cart">
+
+        <input type="hidden" id="inCart" value="{{item.cart_added_quantity}}">
+        {% endif %}
+
+        {% endif %}
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% endblock index %}
+
+  
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"
+    integrity="sha512-JnjG+Wt53GspUQXQhc+c4j8SBERsgJAoHeehagKHlxQN+MtCCmFDghX9/AcbkkNRZptyZU4zC8utK59M5L45Iw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="{% static 'js/addcart.js' %}"></script>
+
+</body>
+
+
+<!-- jQuery -->
+<script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="/static/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/static/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/static/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/static/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js  "></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js  "></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js  "></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js  "></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js  "></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js  "></script>
+
+
+</html>

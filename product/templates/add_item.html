@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block index %}
+  
+  
+    <div class="container">
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6 m-4 p-2" style="background-color: aliceblue;">
+
+          
+            <form method="post">
+                {% csrf_token %}
+                <table>
+                {{ form.as_table }}
+              </table><br>
+                <button type="submit" class="btn btn-outline-success" style="margin-left: 30%;">Add</button>
+            </form>
+          
+        </div>
+        <div class="col-3"></div>
+      </div>
+    </div>
+
+    {% endblock index %}
