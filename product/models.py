@@ -11,7 +11,7 @@ class Item(models.Model):
     Currency=models.CharField(max_length=45)
     category=models.CharField(max_length=45)
     quantity=models.IntegerField()
-    
+    img=models.ImageField()
     def __str__(self):
         return self.name
 

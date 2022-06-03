@@ -1,3 +1,5 @@
 accounts/__pycache__/
 product/__pycache__/
 sample2/__pycache__/
+product/migrations/0003_item_img.py
+product/migrations/__pycache__/0003_item_img.cpython-38.pyc

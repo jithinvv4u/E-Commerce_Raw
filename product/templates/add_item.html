@@ -9,7 +9,7 @@
         <div class="col-6 m-4 p-2" style="background-color: aliceblue;">
 
           
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <table>
                 {{ form.as_table }}

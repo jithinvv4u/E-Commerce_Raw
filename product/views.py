@@ -10,10 +10,12 @@ def createItemView(request):
         return render(request, 'add_item.html', {'form': ItemForm})
     elif request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
+        print(form)
         if form.is_valid():
             form.save()
             return redirect('inventory')
         else:
+            print(form.errors)
             return HttpResponse('not valid')
 
 '''add item to user cart
@@ -114,7 +116,7 @@ def inventoryHome(request):
 #update item in inventory list view
 def inventoryUpdate(request,id):
     if request.method=='POST':
-        form=ItemForm(request.POST,instance=Item.objects.get(pk=id))
+        form=ItemForm(request.POST,request.FILES,instance=Item.objects.get(pk=id))
         if form.is_valid():
             form.save()
             return redirect('inventory')
