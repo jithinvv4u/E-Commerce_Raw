@@ -11,14 +11,17 @@ class Item(models.Model):
     Currency=models.CharField(max_length=45)
     category=models.CharField(max_length=45)
     quantity=models.IntegerField()
-
+    
     def __str__(self):
         return self.name
 
 '''cart model with foreign key connected to model Item and
     UserData of accounts model'''
 class Cart(models.Model):
-    user=models.ForeignKey(UserData,on_delete=models.CASCADE)
+    user=models.ForeignKey(
+        UserData,
+        on_delete=models.CASCADE
+        )
     item=models.ForeignKey(Item,on_delete=models.CASCADE)
     quantity=models.IntegerField(default=1)
 

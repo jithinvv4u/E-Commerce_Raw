@@ -2,13 +2,13 @@
 
 $(document).on('click',".btncart",function(e){
   var pid=$(this).closest('.cart_data').find('.pid').val();
-  var qty=$(".qty").val();
+  // var qty=$(".qty").val();
   $.ajax({
     method:'POST',
     url:'/cart/',
     data:{
       "pid":pid,
-      "qty":qty,
+      // "qty":qty,
       'csrfmiddlewaretoken': $('[name="csrfmiddlewaretoken"]').val()
     },
     datatype:"json",
